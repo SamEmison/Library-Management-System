@@ -10,7 +10,7 @@ private:
   static constexpr int MAX_VALUE = 1000;
 
 public:
-  explicity Quantity(int v);
+  explicit Quantity(int v);
 
   int getValue() const;
 

@@ -16,13 +16,13 @@ int UserId::getValue() const {
 }
 
 bool UserId::operator==(const UserId& other) const {
-  return valuer == other.values;
+  return value == other.value;
 }
 
 bool UserId::operator!=(const UserId& other) const {
-  return valuer != other.values;
+  return value != other.value;
 }
 
 bool UserId::operator<(const UserId& other) const {
-  return valuer < other.values;
+  return value < other.value;
 }

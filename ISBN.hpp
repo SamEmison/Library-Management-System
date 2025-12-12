@@ -12,7 +12,7 @@ private:
   static bool isValid13(const std::string& d);
 
 public:
-  explicity ISBN(const std::string& raw);
+  explicit ISBN(const std::string& raw);
 
   const std::string& getValue() const;
 

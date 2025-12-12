@@ -1,0 +1,37 @@
+#ifndef USER_HPP
+#define USER_HPP
+
+#include <string>
+#include "UserId.hpp"
+#include "EmailAddress.hpp"
+#include "Loan.hpp"
+#include <vector>
+
+class User {
+private:
+  UserId id;
+  std::string name;
+  EmailAddress email;
+
+  std::vector<Loan> loans;
+  
+public:
+  User(const UserId& id, const std::string& name, const EmailAddress& email);
+
+  const UserId& getId() const;
+  const std::string& getName() const;
+  const EmailAddress& getEmail() const;
+
+  void rename(const std::string& newName);
+  void changeEmail(const EmailAddress& newEmail);
+
+  //Loan stuff
+  const std::vector<Loan>& getLoans() const;
+
+  void checkoutBook(const ISBN& isbn,
+		    const std::chrono::system_clock::time_point& now);
+
+  void returnBook(const ISBN& isbn);
+};
+
+#endif

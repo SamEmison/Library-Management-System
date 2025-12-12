@@ -1,0 +1,45 @@
+//Sam Emison
+//12/11/2025
+//Loan.cpp
+
+#include "Loan.hpp"
+#include <stdexcept>
+
+Loan::Loan(const UserId& userId,
+           const ISBN& isbn,
+           const std::chrono::system_clock::time_point& checkoutDate)
+  : userId(userId), isbn(isbn), checkoutDate(checkoutDate), returned(false)
+{
+  // Validate checkout date
+  auto now = std::chrono::system_clock::now();
+  if (checkoutDate > now + std::chrono::hours(1)) {
+    throw std::invalid_argument("Checkout date cannot be in the future");
+  }
+
+  // Due date = 4 weeks (28 days)
+  dueDate = checkoutDate + std::chrono::hours(24 * 28);
+}
+
+const UserId& Loan::getUserId() const {
+  return userId;
+}
+
+const ISBN& Loan::getIsbn() const {
+  return isbn;
+}
+
+const std::chrono::system_clock::time_point& Loan::getCheckoutDate() const {
+  return checkoutDate;
+}
+
+const std::chrono::system_clock::time_point& Loan::getDueDate() const {
+  return dueDate;
+}
+
+bool Loan::isReturned() const {
+  return returned;
+}
+
+void Loan::markReturned() {
+  returned = true;
+}
