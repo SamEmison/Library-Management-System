@@ -14,8 +14,8 @@
 
 // Value Object Tests
 TEST(Task1, UserIdValidation) {
-    EXPECT_THROW(UserId(""), std::invalid_argument);
-    EXPECT_NO_THROW(UserId("U123"));
+    EXPECT_THROW(UserId(-1), std::invalid_argument);
+    EXPECT_NO_THROW(UserId(123));
 }
 
 TEST(Task1, EmailValidation) {
@@ -49,7 +49,7 @@ TEST(Task2, BookCreation) {
 }
 
 TEST(Task2, UserCreation) {
-    UserId uid("U001");
+    UserId uid(1);
     EmailAddress email("user@example.com");
 
     EXPECT_THROW(User(uid, "", email), std::invalid_argument);
@@ -59,7 +59,7 @@ TEST(Task2, UserCreation) {
 }
 //Lona test
 TEST(Task3, LoanLifecycle) {
-    UserId uid("U100");
+    UserId uid(100);
     ISBN isbn("9783161484100");
 
     auto now = std::chrono::system_clock::now();
@@ -76,7 +76,7 @@ TEST(Task3, LoanLifecycle) {
 TEST(Task4, LibrarySystemCheckoutAndReturn) {
     LibrarySystem system;
 
-    UserId uid("U200");
+    UserId uid(200);
     EmailAddress email("borrower@example.com");
     ISBN isbn("9783161484100");
 
@@ -91,22 +91,30 @@ TEST(Task4, LibrarySystemCheckoutAndReturn) {
 
 TEST(Task4, MaxLoanLimit) {
     LibrarySystem system;
+    UserId uid(300);
+    EmailAddress email("user@test.com");
 
-    UserId uid("U300");
-    EmailAddress email("limit@example.com");
-    system.registerUser(uid, "Charlie", email);
+    system.registerUser(uid, "Max User", email);
 
-    for (int i = 0; i < 5; ++i) {
-        ISBN isbn("97831614841" + std::to_string(10 + i));
-        system.addBook(isbn, "Book " + std::to_string(i), "Author");
+    std::vector<ISBN> isbns = {
+        ISBN("9783161484100"),
+        ISBN("9780306406157"),
+        ISBN("9780131103627"),
+        ISBN("9780201633610"),
+        ISBN("9780131101630")
+    };
+
+    for (const auto& isbn : isbns) {
+        system.addBook(isbn, "Book", "Author");
         system.checkoutBook(uid, isbn);
     }
 
-    ISBN extra("9783161484199");
+    ISBN extra("9780262033848");
     system.addBook(extra, "Extra Book", "Author");
 
     EXPECT_THROW(system.checkoutBook(uid, extra), std::invalid_argument);
 }
+
 
 //Test Runner
 

@@ -5,11 +5,8 @@
 #include "Quantity.hpp"
 
 Quantity::Quantity(int v) : value(v) {
-  if (v < MIN_VALUE) {
-    throw std::invalid_argument("Quantity cannot be negative");
-  }
-  if (v > MAX_VALUE) {
-    throw std::invalid_argument("Quantity exceeds allowed maximum");
+  if (v <= 0) {
+    throw std::invalid_argument("Quantity must be positive");
   }
 }
 
